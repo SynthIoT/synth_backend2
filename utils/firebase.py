@@ -1,3 +1,4 @@
+# utils/firebase.py
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 from dotenv import load_dotenv

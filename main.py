@@ -1,7 +1,8 @@
 # main.py
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware  # ← ADD THIS
-from routers import user, project, chat
+from fastapi.middleware.cors import CORSMiddleware  
+from routers import user, project, chat, ai_route, synth
+from services.synth_service import ensure_model_loaded, get_model_path
 
 app = FastAPI(
     title="SYNTHIOT API",
@@ -18,9 +19,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+def load_models():
+    print(f"[synth] CTGAN path: {get_model_path() or '(not set)'}")
+    try:
+        ensure_model_loaded()
+        print("[synth] CTGAN loaded ✅")
+    except Exception as e:
+        print(f"[synth] CTGAN not loaded: {e}")
+
 app.include_router(user.router)
 app.include_router(project.router)
 app.include_router(chat.router)
+app.include_router(ai_route.router)
+app.include_router(synth.router) 
 
 @app.get("/")
 def home():

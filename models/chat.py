@@ -1,3 +1,4 @@
+# models/chat.py
 from pydantic import BaseModel
 from typing import List
 
@@ -12,3 +13,6 @@ class ChatMessage(BaseModel):
 class ChatResponse(BaseModel):
     chat_id: str
     messages: List[ChatMessage]
+
+class MessageIn(BaseModel):
+    message: str
