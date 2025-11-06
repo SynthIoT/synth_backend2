@@ -13,7 +13,9 @@ app = FastAPI(
 # === FIX CORS IN 3 LINES ===
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite default
+    allow_origins=["http://localhost:5173", 
+                   "https://synthiot-frontend-cqpons0qy-dreammart1331-9605s-projects.vercel.app",
+                   "https://synthiot-frontend.vercel.app"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
